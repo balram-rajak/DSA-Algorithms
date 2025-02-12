@@ -33,3 +33,5 @@
 
 # config
 *.vscode
+inputf.in
+outputf.in

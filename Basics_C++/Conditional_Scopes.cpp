@@ -14,6 +14,11 @@ int main(){
     // directly print conditional statement
     cout<< ((a > b) && ( b > c)) << endl;
 
+    bool z = cout << 0-1 <<endl && 0< 10;
+    cout<< z ;
+
+    cout << (1 && -1) << endl;
+    
     return 0;
 
 }

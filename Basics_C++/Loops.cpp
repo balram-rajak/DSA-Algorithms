@@ -9,12 +9,15 @@ int main(){
         // break;
     }
 
-    cout << 0-1 <<endl && 0< 10;
+    // Improper loop
+    for(; int i=1 && cout << i && i<10 ; i++){
+        cout<< "*" << endl;
+    }
 
-    cout << (1 && -1) << endl;
+    int i=1;
+    for(int j; cout << endl << i <<endl && j<10 ;){
+        cout<< "*" << endl;
+    }
 
-    if((0-0+1)) cout<< "true";
-
-
-
+    return 0;
 }
