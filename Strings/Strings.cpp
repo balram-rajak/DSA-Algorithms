@@ -1,4 +1,5 @@
 // covers the basic concepts of strings
+// covers the basic concepts of strings
 
 
 #include<bits/stdc++.h>

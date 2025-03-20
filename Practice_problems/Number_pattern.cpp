@@ -1,12 +1,10 @@
-#include <stdio.h>
-#include <string.h>
-#include <math.h>
-#include <stdlib.h>
+#include<bits/stdc++.h>
 
 int main(){
 
     int n;
     scanf("%d",&n);
+    auto startTime = std::chrono::high_resolution_clock::now();
     int reverse = 0;
     for(int l =1; l >= 1 && l<= 2*n-1;){
 
@@ -43,5 +41,8 @@ int main(){
         }
         
     }
+    auto endTime = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double, std::milli> duration = endTime - startTime;
+    std::cout << "Execution time: " << duration.count() << " ms" << std::endl;
     return 0;
 }

@@ -28,7 +28,11 @@ int main(){
     cout<< "value at **p_p_a: "<<**p_p_a<<" = a: "<< a << endl ;
 
     cout<< p_p_a << endl; // based on the architecture of the system
-    cout<< p_p_a + 1 << endl;
+    /*
+    increments by the size of a pointer as storing a pointer 
+    and pointer block is 8 bytes sized
+    */
+    cout<< p_p_a + 1 << endl; 
     cout<< p_p_a - 1 << endl;
     return 0;
 }

@@ -1,0 +1,39 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build and run",
+            "type": "shell",
+            "command": "cmd",
+            "args": [
+                "/c",
+                "echo Start && BreakAt_42.exe < inputf.in > outputf.in && echo End && echo Execution time: %time%"
+            ],
+            "group": "build",
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "options": {
+                "cwd": "${fileDirname}"
+            }
+        },
+        {
+            "label": "TaskRunner to run CPP and Java code",
+            "type": "shell",
+           "command": " ${workspaceFolder}\\TaskRunner.bat ${file}",
+            "args": [
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [],
+            "options": {
+                "shell": {
+                    "executable": "cmd.exe",
+                    "args": ["/c"]
+                }
+            }
+        }
+    ]
+}
