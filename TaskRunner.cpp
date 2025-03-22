@@ -4,6 +4,7 @@
 #include <chrono>
 #include <cstdlib>
 #include <filesystem>
+#include "Timer.h"
 
 namespace fs = std::filesystem;
 
@@ -19,11 +20,10 @@ void runTaskRunner(const std::string& filePath, const std::string& compileOutDir
     // Determine the file type and prepare commands
     if (fileExtension == ".cpp") {
         compileCommand = "g++ -std=c++14 \"" + filePath + "\" -o \"" + compileOutDir +"\\"+ fileBaseNameNoExtension + ".exe\"";
-        runCommand = "echo Start && " + compileOutDir +"\\"+ fileBaseNameNoExtension + ".exe < " + inputFile + " > " + outputFile + " && echo End && echo Execution time: %time%";
+        runCommand = compileOutDir +"\\"+ fileBaseNameNoExtension + ".exe < " + inputFile + " > " + outputFile;
     } else if (fileExtension == ".java") {
         compileCommand = "javac \"" + filePath + "\" -d \"" + compileOutDir + "\"";
-        // shell command to measure time with execution
-        runCommand = "echo Start && java -cp \"" + compileOutDir + "\" \"" + fileBaseNameNoExtension + "\" < \"" + inputFile + "\" > \"" + outputFile + "\" && echo End && echo Execution time: %time%";
+        runCommand = "java -cp \"" + compileOutDir + "\" " + fileBaseNameNoExtension + " < \"" + inputFile + "\" > \"" + outputFile + "\"";
     } else {
         std::cerr << "Unsupported file type: " << fileExtension << std::endl;
         return;
@@ -36,22 +36,23 @@ void runTaskRunner(const std::string& filePath, const std::string& compileOutDir
         std::cerr << "Compilation failed." << std::endl;
         return;
     }
-    std::cout << "Compilation successful." << std::endl;
+    // std::cout << "Compilation successful." << std::endl;
 
-    // Execute the file and measure execution time
-    std::cout << "Execution command: " << runCommand << std::endl;
+    // // Execute the file and measure execution time
+    // std::cout << "Execution command: " << runCommand << std::endl;
     // auto startTime = std::chrono::high_resolution_clock::now();
 
-    // To convert the string to c style null terminating string
+    // // To convert the string to c style null terminating string
+    Timer timer;
     int runStatus = std::system(runCommand.c_str());
     // auto endTime = std::chrono::high_resolution_clock::now();
 
-    if (runStatus != 0) {
-        std::cerr << "Execution failed." << std::endl;
-        return;
-    }
+    // if (runStatus != 0) {
+    //     std::cerr << "Execution failed." << std::endl;
+    //     return;
+    // }
 
-    // Calculate and display execution time
+    // // Calculate and display execution time
     // std::chrono::duration<double, std::milli> duration = endTime - startTime;
     // std::cout << "Execution time: " << duration.count() << " ms" << std::endl;
 }

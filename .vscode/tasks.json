@@ -7,7 +7,7 @@
             "command": "cmd",
             "args": [
                 "/c",
-                "echo Start && BreakAt_42.exe < inputf.in > outputf.in && echo End && echo Execution time: %time%"
+                "g++.exe","-std=c++14", "${file}", "-o", "${fileBasenameNoExtension}.exe", "&&" , "${file_base_name}.exe<inputf.in>outputf.in"
             ],
             "group": "build",
             "problemMatcher": [
@@ -20,7 +20,7 @@
         {
             "label": "TaskRunner to run CPP and Java code",
             "type": "shell",
-           "command": " ${workspaceFolder}\\TaskRunner.bat ${file}",
+           "command": " ${workspaceFolder}\\Executables\\TaskRunner ${file} D:\\vault\\CodeLab\\DSA-Algorithms\\Executables D:\\vault\\CodeLab\\inputf.in D:\\vault\\CodeLab\\outputf.in",
             "args": [
             ],
             "group": {
