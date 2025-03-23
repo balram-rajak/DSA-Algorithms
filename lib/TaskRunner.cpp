@@ -4,7 +4,7 @@
 #include <chrono>
 #include <cstdlib>
 #include <filesystem>
-#include "Timer.h"
+// #include "Timer.h"
 
 namespace fs = std::filesystem;
 
@@ -19,11 +19,11 @@ void runTaskRunner(const std::string& filePath, const std::string& compileOutDir
 
     // Determine the file type and prepare commands
     if (fileExtension == ".cpp") {
-        compileCommand = "g++ -std=c++14 \"" + filePath + "\" -o \"" + compileOutDir +"\\"+ fileBaseNameNoExtension + ".exe\"";
+        compileCommand = "g++ \"" + filePath + "\" -o \"" + compileOutDir +"\\"+ fileBaseNameNoExtension + ".exe\" -L\"D:\\vault\\CodeLab\\DSA-Algorithms\\lib\" -lTimer -I\"D:\\vault\\CodeLab\\DSA-Algorithms\\lib\"";
         runCommand = compileOutDir +"\\"+ fileBaseNameNoExtension + ".exe < " + inputFile + " > " + outputFile;
     } else if (fileExtension == ".java") {
-        compileCommand = "javac \"" + filePath + "\" -d \"" + compileOutDir + "\"";
-        runCommand = "java -cp \"" + compileOutDir + "\" " + fileBaseNameNoExtension + " < \"" + inputFile + "\" > \"" + outputFile + "\"";
+        compileCommand = "javac -cp D:\\vault\\CodeLab\\DSA-Algorithms\\lib " + filePath + " -d \"" + compileOutDir + "\"";
+        runCommand = "java -Xint -Xms16m -Xmx16m -XX:+TieredCompilation -XX:TieredStopAtLevel=1 -XX:+UseSerialGC -cp \"D:\\vault\\CodeLab\\DSA-Algorithms\\lib;" + compileOutDir + "\" " + fileBaseNameNoExtension + " < \"" + inputFile + "\" > \"" + outputFile + "\"";
     } else {
         std::cerr << "Unsupported file type: " << fileExtension << std::endl;
         return;
@@ -32,25 +32,25 @@ void runTaskRunner(const std::string& filePath, const std::string& compileOutDir
     // Compile the file
     std::cout << "Compilation command: " << compileCommand << std::endl;
     int compileStatus = std::system(compileCommand.c_str());
-    if (compileStatus != 0) {
+    if (compileStatus) {
         std::cerr << "Compilation failed." << std::endl;
         return;
     }
     // std::cout << "Compilation successful." << std::endl;
 
     // // Execute the file and measure execution time
-    // std::cout << "Execution command: " << runCommand << std::endl;
+    std::cout << "Execution command: " << runCommand << std::endl;
     // auto startTime = std::chrono::high_resolution_clock::now();
 
     // // To convert the string to c style null terminating string
-    Timer timer;
+    // Timer timer;
     int runStatus = std::system(runCommand.c_str());
     // auto endTime = std::chrono::high_resolution_clock::now();
 
-    // if (runStatus != 0) {
-    //     std::cerr << "Execution failed." << std::endl;
-    //     return;
-    // }
+    if (runStatus) {
+        std::cerr << "Execution failed." << std::endl;
+        return;
+    }
 
     // // Calculate and display execution time
     // std::chrono::duration<double, std::milli> duration = endTime - startTime;

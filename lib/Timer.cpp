@@ -2,13 +2,13 @@
 #include "Timer.h"
 
 // Constructor: Starts the timer
-__declspec(dllexport) Timer::Timer() {
+Timer::Timer() {
     start = std::chrono::high_resolution_clock::now();
 }
 
 // Destructor: Automatically calculates and prints elapsed time
 
-__declspec(dllexport) Timer::~Timer() {
+Timer::~Timer() {
     auto end = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double, std::milli> duration = end - start;
 
@@ -27,5 +27,5 @@ __declspec(dllexport) Timer::~Timer() {
     std::cout << "Execution time: " << duration.count() << " ms" << std::endl;
 
     // Optional: Detach or free the console if desired
-    // FreeConsole();
+    FreeConsole();
 }

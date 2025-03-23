@@ -20,7 +20,7 @@
         {
             "label": "TaskRunner to run CPP and Java code",
             "type": "shell",
-           "command": " ${workspaceFolder}\\Executables\\TaskRunner ${file} D:\\vault\\CodeLab\\DSA-Algorithms\\Executables D:\\vault\\CodeLab\\inputf.in D:\\vault\\CodeLab\\outputf.in",
+           "command": " ${workspaceFolder}\\lib\\TaskRunner.exe ${file} D:\\vault\\CodeLab\\DSA-Algorithms\\target D:\\vault\\CodeLab\\inputf.in D:\\vault\\CodeLab\\outputf.in",
             "args": [
             ],
             "group": {
