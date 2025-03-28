@@ -20,10 +20,10 @@ void runTaskRunner(const std::string& filePath, const std::string& compileOutDir
     // Determine the file type and prepare commands
     if (fileExtension == ".cpp") {
         compileCommand = "g++ \"" + filePath + "\" -o \"" + compileOutDir +"\\"+ fileBaseNameNoExtension + ".exe\" -L\"D:\\vault\\CodeLab\\DSA-Algorithms\\lib\" -lTimer -I\"D:\\vault\\CodeLab\\DSA-Algorithms\\lib\"";
-        runCommand = compileOutDir +"\\"+ fileBaseNameNoExtension + ".exe < " + inputFile + " > " + outputFile;
+        runCommand = "\""+compileOutDir +"\\"+ fileBaseNameNoExtension + ".exe\" < " + inputFile + " > " + outputFile;
     } else if (fileExtension == ".java") {
         compileCommand = "javac -cp D:\\vault\\CodeLab\\DSA-Algorithms\\lib " + filePath + " -d \"" + compileOutDir + "\"";
-        runCommand = "java -Xint -Xms16m -Xmx16m -XX:+TieredCompilation -XX:TieredStopAtLevel=1 -XX:+UseSerialGC -cp \"D:\\vault\\CodeLab\\DSA-Algorithms\\lib;" + compileOutDir + "\" " + fileBaseNameNoExtension + " < \"" + inputFile + "\" > \"" + outputFile + "\"";
+        runCommand = "java -Xms16m -Xmx16m -XX:+TieredCompilation -XX:TieredStopAtLevel=1 -XX:+UseSerialGC -cp \"D:\\vault\\CodeLab\\DSA-Algorithms\\lib;" + compileOutDir + "\" " + fileBaseNameNoExtension + " < \"" + inputFile + "\" > \"" + outputFile + "\"";
     } else {
         std::cerr << "Unsupported file type: " << fileExtension << std::endl;
         return;

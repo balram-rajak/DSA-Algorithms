@@ -11,6 +11,6 @@ public class Timer implements AutoCloseable{
 
     @Override
     public void close(){
-        System.err.println("Execution time: "+(System.currentTimeMillis() - start));
+        System.err.println("Execution time: "+(System.currentTimeMillis() - start)+" ms");
     }
 }

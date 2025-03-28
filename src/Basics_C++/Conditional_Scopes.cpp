@@ -16,7 +16,7 @@ int main(){
     cout<< ((a > b) && ( b > c)) << endl;
 
     bool z = cout << 0-1 <<endl && 0< 10;
-    cout<< z ;
+    cout<< z <<endl ;
 
     cout << (1 && -1) << endl;
     
