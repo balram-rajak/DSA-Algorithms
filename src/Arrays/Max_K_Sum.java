@@ -2,7 +2,7 @@
 import java.util.*;
 import java.io.*;
 
-public class Prefix_Sum {
+public class Max_K_Sum {
     
     public static int maximumSumSubarray(int[] arr, int k){
 
