@@ -1,6 +1,9 @@
 #include<bits/stdc++.h>
 // #include "Timer.h"
 
+/*
+* Whether a pair of numbers can produce K from their sum
+*/
 using namespace std;
 int freq[1000000+1] ={0};
 int main(){

@@ -1,4 +1,6 @@
-// package Arrays;
+
+// SubArray of size K that will procude max Sum
+
 import java.util.*;
 import java.io.*;
 

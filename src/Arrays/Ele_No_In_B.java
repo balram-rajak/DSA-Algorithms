@@ -2,6 +2,11 @@
 import java.util.*;
 import java.util.stream.Collectors.*;
 
+
+/* 
+ * Find the elements that are present in A nut not in B
+ * Sol: Used hashing with index as the value and value at index = freq of the number/index in B
+ */
 class Ele_No_In_B{
 
     public static ArrayList<Integer> findMissing(int[] a, int[] b){

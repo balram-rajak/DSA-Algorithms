@@ -1,6 +1,8 @@
 #include<bits/stdc++.h>
 #include "Timer.h"
 
+// Find the frequency of the numbers in the given array
+
 using namespace std;
 
 int frequency[10000000]={0};
