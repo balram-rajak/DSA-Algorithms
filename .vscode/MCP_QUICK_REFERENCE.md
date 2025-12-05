@@ -68,9 +68,10 @@ You would need to install and configure it separately. Contact your system admin
 
 ## Current MCP Configuration Location
 
-- **System-wide MCP Config**: `/home/runner/work/_temp/mcp-server/mcp-config.json`
-- **VS Code User Settings**: `~/.config/Code/User/settings.json` (or via Command Palette)
+- **VS Code User Settings**: `~/.config/Code/User/settings.json` (Linux/Mac) or `%APPDATA%\Code\User\settings.json` (Windows)
+  - Access via Command Palette: `Ctrl+Shift+P` → "Preferences: Open User Settings (JSON)"
 - **Workspace Settings**: `.vscode/settings.json` (in this repository)
+- **System MCP Config**: May vary depending on your environment setup
 
 ---
 

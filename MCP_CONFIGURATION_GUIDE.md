@@ -63,10 +63,16 @@ If you need LangChain MCP capabilities, you would need to:
       "command": "node",
       "args": ["/path/to/github-mcp-server"]
     },
-    "langchain-mcp-server": {
+    "playwright-mcp-server": {
       "enabled": true,
       "command": "node",
-      "args": ["/path/to/langchain-mcp-server"]
+      "args": ["/path/to/playwright-mcp-server"]
+    },
+    "custom-mcp-server": {
+      "enabled": false,
+      "command": "node",
+      "args": ["/path/to/custom-mcp-server"],
+      "description": "Example of adding a new MCP server"
     }
   }
 }
