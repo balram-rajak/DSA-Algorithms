@@ -1,4 +1,26 @@
 {
+  // Auto-suggestions disabled for this workspace
+  // Modified by: GitHub Copilot
+  // Date: December 7, 2025
+  // Purpose: Disable all auto-completion and IntelliSense suggestions across all languages
+  
+  // ===== AI INTELLISENSE AND COPILOT DISABLED =====
+  // TO RE-ENABLE: Remove these settings or set to true/default values
+  "github.copilot.enable": {
+    "*": false
+  },
+  "github.copilot.editor.enableAutoCompletions": false,
+  "editor.quickSuggestions": {
+    "other": false,
+    "comments": false,
+    "strings": false
+  },
+  "editor.suggestOnTriggerCharacters": false,
+  "editor.wordBasedSuggestions": "off",
+  "editor.parameterHints.enabled": false,
+  "editor.suggest.showWords": false,
+  "editor.inlineSuggest.enabled": false,
+  
   "cmake.configureOnOpen": true,
   "files.associations": {
     "iostream": "cpp",
