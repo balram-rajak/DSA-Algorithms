@@ -19,7 +19,9 @@ void runTaskRunner(const std::string& filePath, const std::string& compileOutDir
 
     // Determine the file type and prepare commands
     if (fileExtension == ".cpp") {
-        compileCommand = "g++ \"" + filePath + "\" -o \"" + compileOutDir +"\\"+ fileBaseNameNoExtension + ".exe\" -L\"D:\\vault\\CodeLab\\DSA-Algorithms\\lib\" -lTimer -I\"D:\\vault\\CodeLab\\DSA-Algorithms\\lib\"";
+        // compileCommand = "g++ \"" + filePath + "\" -o \"" + compileOutDir +"\\"+ fileBaseNameNoExtension + ".exe\" -L\"F:\\vault\\CodeLab\\DSA-Algorithms\\lib\" -lTimer -I\"F:\\vault\\CodeLab\\DSA-Algorithms\\lib\"";
+        // Commenting out as the compilation is getting slower
+        compileCommand = "g++ \"" + filePath + "\" -o \"" + compileOutDir +"\\"+ fileBaseNameNoExtension + ".exe";
         runCommand = "\""+compileOutDir +"\\"+ fileBaseNameNoExtension + ".exe\" < " + inputFile + " > " + outputFile;
     } else if (fileExtension == ".java") {
         compileCommand = "javac -cp D:\\vault\\CodeLab\\DSA-Algorithms\\lib " + filePath + " -d \"" + compileOutDir + "\"";
@@ -27,7 +29,10 @@ void runTaskRunner(const std::string& filePath, const std::string& compileOutDir
     } else if (fileExtension == ".py") {
         compileCommand = "";  // Python doesn't need compilation
         runCommand = "python3 \"" + filePath + "\" < \"" + inputFile + "\" > \"" + outputFile + "\"";
-    } else {
+    } else if (fileExtension == ".js") {
+        compileCommand = "";  // Python doesn't need compilation
+        runCommand = "node \"" + filePath + "\" < \"" + inputFile + "\" > \"" + outputFile + "\"";
+    }else {
         std::cerr << "Unsupported file type: " << fileExtension << std::endl;
         return;
     }
