@@ -18,7 +18,7 @@
             }
         },
         {
-            "label": "TaskRunner to run CPP and Java code",
+            "label": "TaskRunner to run CPP, Java, python, JS code",
             "type": "shell",
            "command": " ${workspaceFolder}\\lib\\TaskRunner \"${file}\" \"F:\\vault\\CodeLab\\DSA-Algorithms\\target\" \"F:\\vault\\CodeLab\\DSA-Algorithms\\inputf.in\" \"F:\\vault\\CodeLab\\DSA-Algorithms\\outputf.in\"",
             "args": [

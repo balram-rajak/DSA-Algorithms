@@ -2,6 +2,7 @@
 #include <fstream>
 #include <string>
 #include <chrono>
+#include <algorithm>
 #include <cstdlib>
 #include <filesystem>
 // #include "Timer.h"
@@ -14,55 +15,79 @@ void runTaskRunner(const std::string& filePath, const std::string& compileOutDir
     std::string fileBaseNameNoExtension = file.stem().string();
     std::string fileExtension = file.extension().string();
 
+    // Convert to relative paths for ccache compatibility (absolute paths break cache hashing)
+    fs::path relFilePath = fs::relative(filePath);
+    fs::path relCompileOutDir = fs::relative(compileOutDir);
+
     std::string compileCommand;
     std::string runCommand;
 
     // Determine the file type and prepare commands
     if (fileExtension == ".cpp") {
-        // compileCommand = "g++ \"" + filePath + "\" -o \"" + compileOutDir +"\\"+ fileBaseNameNoExtension + ".exe\" -L\"F:\\vault\\CodeLab\\DSA-Algorithms\\lib\" -lTimer -I\"F:\\vault\\CodeLab\\DSA-Algorithms\\lib\"";
-        // Commenting out as the compilation is getting slower
-        compileCommand = "g++ \"" + filePath + "\" -o \"" + compileOutDir +"\\"+ fileBaseNameNoExtension + ".exe";
-        runCommand = "\""+compileOutDir +"\\"+ fileBaseNameNoExtension + ".exe\" < " + inputFile + " > " + outputFile;
+        // Note: ccache on Windows+MinGW is unreliable (known issue). Use g++ directly.
+        // For fast compilation, use minimal headers (#include <iostream>, <utility>, <string>) instead of bits/stdc++.h
+        compileCommand = "g++ -std=c++17 -O2 -I\"F:\\vault\\CodeLab\\DSA-Algorithms\\lib\" -include bits/stdc++.h \"" + relFilePath.string() + "\" -o \"" + relCompileOutDir.string() +"\\"+ fileBaseNameNoExtension + ".exe\"";
+
+        runCommand = "\""+relCompileOutDir.string() +"\\"+ fileBaseNameNoExtension + ".exe\" < \"" + inputFile + "\" > \"" + outputFile + "\"";
     } else if (fileExtension == ".java") {
-        compileCommand = "javac -cp D:\\vault\\CodeLab\\DSA-Algorithms\\lib " + filePath + " -d \"" + compileOutDir + "\"";
-        runCommand = "java -Xms16m -Xmx16m -XX:+TieredCompilation -XX:TieredStopAtLevel=1 -XX:+UseSerialGC -cp \"D:\\vault\\CodeLab\\DSA-Algorithms\\lib;" + compileOutDir + "\" " + fileBaseNameNoExtension + " < \"" + inputFile + "\" > \"" + outputFile + "\"";
+        compileCommand = "javac \"" + relFilePath.string() + "\" -d \"" + relCompileOutDir.string() + "\"";
+        runCommand = "java -Xms16m -Xmx16m -XX:+TieredCompilation -XX:TieredStopAtLevel=1 -XX:+UseSerialGC -cp \"" + relCompileOutDir.string() + "\" " + fileBaseNameNoExtension + " < \"" + inputFile + "\" > \"" + outputFile + "\"";
     } else if (fileExtension == ".py") {
         compileCommand = "";  // Python doesn't need compilation
-        runCommand = "python3 \"" + filePath + "\" < \"" + inputFile + "\" > \"" + outputFile + "\"";
+        runCommand = "python3 \"" + relFilePath.string() + "\" < \"" + inputFile + "\" > \"" + outputFile + "\"";
     } else if (fileExtension == ".js") {
-        compileCommand = "";  // Python doesn't need compilation
-        runCommand = "node \"" + filePath + "\" < \"" + inputFile + "\" > \"" + outputFile + "\"";
+        compileCommand = "";  // JavaScript doesn't need compilation
+        runCommand = "node \"" + relFilePath.string() + "\" < \"" + inputFile + "\" > \"" + outputFile + "\"";
     }else {
         std::cerr << "Unsupported file type: " << fileExtension << std::endl;
         return;
     }
 
-    // Compile the file
+    // Show commands for transparency
     std::cout << "Compilation command: " << compileCommand << std::endl;
-    int compileStatus = std::system(compileCommand.c_str());
-    if (compileStatus) {
-        std::cerr << "Compilation failed." << std::endl;
+    std::cout << "Execution command:   " << runCommand << std::endl;
+
+    auto captureMs = [](const std::string& cmd) -> std::pair<int, double> {
+        std::string ps =
+            "powershell -NoLogo -NoProfile -NonInteractive -Command \"$sw=[System.Diagnostics.Stopwatch]::StartNew(); cmd /c '" +
+            cmd +
+            "'; $code=$LASTEXITCODE; $sw.Stop(); if($code -ne 0){ exit $code }; [int]$sw.ElapsedMilliseconds\"";
+
+#ifdef _WIN32
+        FILE* pipe = _popen(ps.c_str(), "r");
+#else
+        FILE* pipe = popen(ps.c_str(), "r");
+#endif
+        if (!pipe) return {1, 0.0};
+        std::string out; char buffer[256];
+        while (fgets(buffer, sizeof(buffer), pipe)) out += buffer;
+#ifdef _WIN32
+        int code = _pclose(pipe);
+#else
+        int code = pclose(pipe);
+#endif
+        // Trim whitespace
+        auto isspace_lambda = [](unsigned char c){ return std::isspace(c) != 0; };
+        out.erase(out.begin(), std::find_if(out.begin(), out.end(), [&](unsigned char c){return !isspace_lambda(c);}));
+        out.erase(std::find_if(out.rbegin(), out.rend(), [&](unsigned char c){return !isspace_lambda(c);}).base(), out.end());
+        double ms = 0.0;
+        try { if (!out.empty()) ms = std::stod(out); } catch (...) { /* ignore parse error */ }
+        return {code, ms};
+    };
+
+    auto [compileCode, compileMs] = captureMs(compileCommand);
+    if (compileCode != 0) {
+        std::cerr << "Compilation failed (exit code: " << compileCode << ")." << std::endl;
         return;
     }
-    // std::cout << "Compilation successful." << std::endl;
 
-    // // Execute the file and measure execution time
-    std::cout << "Execution command: " << runCommand << std::endl;
-    // auto startTime = std::chrono::high_resolution_clock::now();
-
-    // // To convert the string to c style null terminating string
-    // Timer timer;
-    int runStatus = std::system(runCommand.c_str());
-    // auto endTime = std::chrono::high_resolution_clock::now();
-
-    if (runStatus) {
-        std::cerr << "Execution failed." << std::endl;
+    auto [runCode, runMs] = captureMs(runCommand);
+    if (runCode != 0) {
+        std::cerr << "Execution failed (exit code: " << runCode << ")." << std::endl;
         return;
     }
 
-    // // Calculate and display execution time
-    // std::chrono::duration<double, std::milli> duration = endTime - startTime;
-    // std::cout << "Execution time: " << duration.count() << " ms" << std::endl;
+    std::cout << "Compile: " << compileMs << " ms, Run: " << runMs << " ms, Total: " << (compileMs + runMs) << " ms" << std::endl;
 }
 
 int main(int argc, char* argv[]) {
@@ -82,5 +107,6 @@ int main(int argc, char* argv[]) {
 
     runTaskRunner(filePath, compileOutDir, inputFile, outputFile);
 
+    
     return 0;
 }
