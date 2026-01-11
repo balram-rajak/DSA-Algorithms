@@ -1,0 +1,88 @@
+name: Daily Auto-Commit and Push
+
+on:
+  schedule:
+    # 9 PM IST = 15:30 UTC (accounting for daylight savings)
+    - cron: '30 15 * * *'
+  
+  # Allow manual trigger from Actions tab
+  workflow_dispatch:
+
+jobs:
+  auto-commit:
+    runs-on: ubuntu-latest
+    
+    # Required for pushing commits
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check for changes
+        id: check
+        run: |
+          if git status --porcelain | grep -q .; then
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+          else
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Generate contextual commit message
+        if: steps.check.outputs.has_changes == 'true'
+        id: message
+        run: |
+          # Get list of changed files
+          CHANGED_FILES=$(git diff --name-only HEAD)
+          
+          # Count files by category
+          PRACTICE=$(echo "$CHANGED_FILES" | grep -c 'Practice_problems' || true)
+          CONTESTS=$(echo "$CHANGED_FILES" | grep -c 'Contests' || true)
+          STRIVER=$(echo "$CHANGED_FILES" | grep -c 'Striver' || true)
+          COURSES=$(echo "$CHANGED_FILES" | grep -c 'Courses' || true)
+          LANGUAGE=$(echo "$CHANGED_FILES" | grep -c 'Language_Basics' || true)
+          NOTEBOOKS=$(echo "$CHANGED_FILES" | grep -c '.ipynb' || true)
+          
+          # Build message
+          MESSAGE="Update:"
+          
+          [ $PRACTICE -gt 0 ] && MESSAGE="$MESSAGE Practice Problems ($PRACTICE),"
+          [ $CONTESTS -gt 0 ] && MESSAGE="$MESSAGE Contests ($CONTESTS),"
+          [ $STRIVER -gt 0 ] && MESSAGE="$MESSAGE Striver DSA Sheet ($STRIVER),"
+          [ $COURSES -gt 0 ] && MESSAGE="$MESSAGE Courses ($COURSES),"
+          [ $LANGUAGE -gt 0 ] && MESSAGE="$MESSAGE Language Basics ($LANGUAGE),"
+          [ $NOTEBOOKS -gt 0 ] && MESSAGE="$MESSAGE Notebooks ($NOTEBOOKS),"
+          
+          # Remove trailing comma and add date
+          MESSAGE="${MESSAGE%,}"
+          MESSAGE="$MESSAGE - $(date +%Y-%m-%d)"
+          
+          # Export for next step
+          echo "commit_message=$MESSAGE" >> $GITHUB_OUTPUT
+          echo "Generated message: $MESSAGE"
+
+      - name: Configure git
+        if: steps.check.outputs.has_changes == 'true'
+        run: |
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+
+      - name: Commit and push changes
+        if: steps.check.outputs.has_changes == 'true'
+        run: |
+          git add .
+          git commit -m "${{ steps.message.outputs.commit_message }}"
+          git push origin main
+        continue-on-error: true
+
+      - name: Log result
+        if: always()
+        run: |
+          if [ "${{ steps.check.outputs.has_changes }}" = "true" ]; then
+            echo "✅ Committed: ${{ steps.message.outputs.commit_message }}"
+          else
+            echo "⏭️ No changes to commit"
+          fi
