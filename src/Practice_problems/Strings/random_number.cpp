@@ -10,7 +10,7 @@ int main()
     {
         // srand(time(0));
         int sequence_length = rand() % 10;
-        cerr << rand();
+
         cerr << sequence_length << "\n";
         vector<int> a;
         for (int i = 0; i < sequence_length; ++i)
