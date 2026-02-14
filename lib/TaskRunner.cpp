@@ -31,7 +31,9 @@ void runTaskRunner(const std::string& filePath, const std::string& compileOutDir
         runCommand = "\""+relCompileOutDir.string() +"\\"+ fileBaseNameNoExtension + ".exe\" < \"" + inputFile + "\" > \"" + outputFile + "\"";
     } else if (fileExtension == ".java") {
         compileCommand = "javac \"" + relFilePath.string() + "\" -d \"" + relCompileOutDir.string() + "\"";
-        runCommand = "java -Xms16m -Xmx16m -XX:+TieredCompilation -XX:TieredStopAtLevel=1 -XX:+UseSerialGC -cp \"" + relCompileOutDir.string() + "\" " + fileBaseNameNoExtension + " < \"" + inputFile + "\" > \"" + outputFile + "\"";
+        // runCommand = "java -Xms16m -Xmx16m -XX:+TieredCompilation -XX:TieredStopAtLevel=1 -XX:+UseSerialGC -cp \"" + relCompileOutDir.string() + "\" " + fileBaseNameNoExtension + " < \"" + inputFile + "\" > \"" + outputFile + "\"";
+        runCommand = "java -cp \"" + relCompileOutDir.string() + "\" " + fileBaseNameNoExtension + " < \"" + inputFile + "\" > \"" + outputFile + "\"";
+    
     } else if (fileExtension == ".py") {
         compileCommand = "";  // Python doesn't need compilation
         runCommand = "python3 \"" + relFilePath.string() + "\" < \"" + inputFile + "\" > \"" + outputFile + "\"";

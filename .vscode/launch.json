@@ -2,6 +2,34 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "type": "java",
+            "name": "Percolation",
+            "request": "launch",
+            "mainClass": "Courses.Algorithms_Part_1.Percolation",
+            "projectName": "DSA-Algorithms_33bdc2c6"
+        },
+        {
+            "type": "java",
+            "name": "Factorials_less_or_equal_to_n",
+            "request": "launch",
+            "mainClass": "Factorials_less_or_equal_to_n",
+            "projectName": "DSA-Algorithms_33bdc2c6"
+        },
+        {
+            "type": "java",
+            "name": "Palindrome",
+            "request": "launch",
+            "mainClass": "Palindrome",
+            "projectName": "DSA-Algorithms_33bdc2c6"
+        },
+        {
+            "type": "java",
+            "name": "Reverse_a_Number",
+            "request": "launch",
+            "mainClass": "Reverse_a_Number",
+            "projectName": "DSA-Algorithms_33bdc2c6"
+        },
+        {
             "name": "C++ Launch",
             "type": "cppvsdbg",
             "request": "launch",

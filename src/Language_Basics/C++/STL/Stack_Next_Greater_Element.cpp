@@ -1,5 +1,5 @@
 
-// FInd next greater element of an elment in an array frkom left -> right
+// Find next greater element of all elment in an array from left -> right
 // #include<bits/stdc++.h>
 using namespace std;
 
