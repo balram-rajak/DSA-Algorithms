@@ -2,12 +2,18 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "build and run",
+            "label": "build and run C++",
             "type": "shell",
             "command": "cmd",
             "args": [
                 "/c",
-                "g++.exe","-std=c++14", "${file}", "-o", "${fileBasenameNoExtension}.exe", "&&" , "${file_base_name}.exe<inputf.in>outputf.in"
+                "g++.exe",
+                "-std=c++14",
+                "${file}",
+                "-o",
+                "${fileBasenameNoExtension}.exe",
+                "&&",
+                "${file_base_name}.exe<inputf.in>outputf.in"
             ],
             "group": "build",
             "problemMatcher": [
@@ -15,6 +21,27 @@
             ],
             "options": {
                 "cwd": "${fileDirname}"
+            }
+        },
+        {
+            "label": "build C++ (debug)",
+            "type": "shell",
+            "command": "cmd",
+            "args": [
+                "/c",
+                "g++.exe",
+                "-std=c++14",
+                "-g",
+                "${workspaceFolder}\\lib\\TaskRunner.cpp",
+                "-o",
+                "${workspaceFolder}\\lib\\TaskRunner.exe"
+            ],
+            "group": "build",
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
             }
         },
         {

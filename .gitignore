@@ -6,6 +6,7 @@
 *.lo
 *.o
 *.obj
+*.class
 
 # Precompiled Headers
 *.gch
@@ -32,10 +33,13 @@
 *.app
 
 # config
-*.vscode
+# *.vscode
 inputf.in
 outputf.in
 
 # macos
 .Ds_Store
 *.dsYM
+
+# folders
+target/*.*

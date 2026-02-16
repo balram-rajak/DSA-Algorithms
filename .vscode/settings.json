@@ -104,6 +104,6 @@
   "java.foldingRange.enabled": false,
   // "zenMode.fullScreen": false,
   "workbench.editor.tabSizing": "shrink",
-  "workbench.editor.showTabs": "single",
+  "workbench.editor.showTabs": "multiple",
   "java.completion.chain.enabled": true
 }

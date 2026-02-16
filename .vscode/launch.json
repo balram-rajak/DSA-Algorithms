@@ -2,44 +2,31 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "type": "java",
-            "name": "Percolation",
+            // Debugger launch task to debug TaskRunner
+            "name": "Debug TaskRunner",
+            "type": "cppdbg",
             "request": "launch",
-            "mainClass": "Courses.Algorithms_Part_1.Percolation",
-            "projectName": "DSA-Algorithms_33bdc2c6"
-        },
-        {
-            "type": "java",
-            "name": "Factorials_less_or_equal_to_n",
-            "request": "launch",
-            "mainClass": "Factorials_less_or_equal_to_n",
-            "projectName": "DSA-Algorithms_33bdc2c6"
-        },
-        {
-            "type": "java",
-            "name": "Palindrome",
-            "request": "launch",
-            "mainClass": "Palindrome",
-            "projectName": "DSA-Algorithms_33bdc2c6"
-        },
-        {
-            "type": "java",
-            "name": "Reverse_a_Number",
-            "request": "launch",
-            "mainClass": "Reverse_a_Number",
-            "projectName": "DSA-Algorithms_33bdc2c6"
-        },
-        {
-            "name": "C++ Launch",
-            "type": "cppvsdbg",
-            "request": "launch",
-            "program": "${workspaceFolder}/${fileBasenameNoExtension}",
-            "args": [],
-            "stopAtEntry": false,
+            "program": "${workspaceFolder}\\lib\\TaskRunner.exe",
+            "args": [
+                // All the required arguments for TaskRunner, here percolation.java example program is used to debug taskrunner
+                "F:\\vault\\CodeLab\\princeton-algorithms-part1\\Module 02 - Union-Find\\Percolation.java",
+                "F:\\vault\\CodeLab\\princeton-algorithms-part1\\target",
+                "F:\\vault\\CodeLab\\princeton-algorithms-part1\\inputf.in",
+                "F:\\vault\\CodeLab\\princeton-algorithms-part1\\outputf.in"
+            ],
             "cwd": "${workspaceFolder}",
-            "environment": [],
-            "console": "integratedTerminal",
-            "preLaunchTask": "build and run"
+            "stopAtEntry": false,
+            "preLaunchTask": "build C++ (debug)",
+            "MIMode": "gdb",
+            "miDebuggerPath": "gdb.exe",
+            "externalConsole": false,
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ]
         },
         {
             "type": "node",
