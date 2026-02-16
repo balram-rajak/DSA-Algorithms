@@ -47,8 +47,14 @@
         {
             "label": "TaskRunner to run CPP, Java, python, JS code",
             "type": "shell",
-           "command": " ${workspaceFolder}\\lib\\TaskRunner \"${file}\" \"F:\\vault\\CodeLab\\DSA-Algorithms\\target\" \"F:\\vault\\CodeLab\\DSA-Algorithms\\inputf.in\" \"F:\\vault\\CodeLab\\DSA-Algorithms\\outputf.in\"",
+            "command": "cmd",
             "args": [
+                "/c",
+                "${workspaceFolder}\\lib\\TaskRunner",
+                "${file}",
+                "${workspaceFolder}\\target",
+                "${workspaceFolder}\\inputf.in",
+                "${workspaceFolder}\\outputf.in"
             ],
             "group": {
                 "kind": "build",
@@ -56,10 +62,7 @@
             },
             "problemMatcher": [],
             "options": {
-                "shell": {
-                    "executable": "cmd.exe",
-                    "args": ["/c"]
-                }
+                "cwd": "${workspaceFolder}"
             }
         }
     ]
