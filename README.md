@@ -5,60 +5,49 @@
 
 A comprehensive collection of Data Structures and Algorithms implementations and competitive programming solutions.
 
-## 🌟 Featured: Striver's A2Z DSA Sheet Solutions
-
-📂 **[View Striver's A2Z DSA Sheet Solutions →](src/Striver_A2Z_Sheet/)**
-
-A dedicated collection of 33+ solved problems from Striver's comprehensive A2Z DSA Course, covering:
-- ✅ Basic Mathematics & Number Theory
-- ✅ Pattern Problems  
-- ✅ Recursion Fundamentals
-- ✅ Hashing & Frequency Problems
-- ✅ Array Manipulation
-- ✅ Advanced Mathematics (Sieve Algorithms)
-
-[**Explore the complete Striver's A2Z Sheet directory →**](src/Striver_A2Z_Sheet/)
-
 ---
+
+## 🔧 Setup and Usage
+
+### **Prerequisites**
+- Java Development Kit (JDK) 11 or higher
+- VS Code with Java Extension Pack (or any Java IDE)
+- Git
+
+### **Clone Repository**
+```bash
+git clone https://github.com/balram-rajak/DSA-Algorithms.git
+cd DSA-Algorithms
+```
+### create `inputf.in` and `outputf.in` files in root directory of repository
+```bash
+type nul > inputf.in
+type nul > outputf.in
+```
+
+### ⚡ Quick run with VS Code TaskRunner
+
+**Press `Ctrl+Shift+B`** — automatically compiles, times execution, and handles I/O redirection (`inputf.in` → `outputf.in`).
+
+**Supports:** C++, Java, Python, JavaScript
+
+**Workflow:**
+1. Write input → `inputf.in`
+2. Hit `Ctrl+Shift+B`
+3. Check output → `outputf.in`
+
+**Rebuild TaskRunner** (if modified):
+```bash
+cd lib
+g++ -std=c++17 TaskRunner.cpp -o TaskRunner.exe
+```
+
+Extend language support in [lib/TaskRunner.cpp](lib/TaskRunner.cpp).
 
 ## 📁 Repository Structure
 
 This repository contains solutions and practice code for algorithmic problems and competitive coding
 
-## 🏃 Running the Source Code
-
-Code compiles and runs automatically with just a keyboard shortcut in VS Code.
-The code is wrapped inside a timer library that calculates the execution time.
-
-**Keyboard shortcut**: `Ctrl + Shift + B`
-
-### How it Works
-1. Open any source file (.cpp, .java, .py, .js) in VS Code
-2. Add test input to `inputf.in` in the repository root
-3. Press `Ctrl + Shift + B`
-4. Check `outputf.in` for the output
-5. Execution time is displayed in the terminal
-
-## 🔧 Compiling the TaskRunner
-
-If you need to recompile the TaskRunner:
-
-```bash
-cd path-to-TaskRunner.cpp
-g++ -std=c++17 TaskRunner.cpp -o TaskRunner.exe
-```
-
-## 📚 Resources
-
-- **Striver's A2Z DSA Course**: [takeuforward.org](https://takeuforward.org/strivers-a2z-dsa-course/strivers-a2z-dsa-course-sheet-2/)
-- **Practice Platform**: Coding problems from various competitive programming platforms
-
 ## 🤝 Contributing
 
 Contributions are welcome! Feel free to add more solutions, optimize existing code, or improve documentation.
-
----
-
-**Quick Links**:
-- 🎯 [Striver's A2Z Sheet Solutions](src/Striver_A2Z_Sheet/) - Featured collection with 33+ problems solved
-- 📖 [Main README](README.md) - You are here
